@@ -55,11 +55,13 @@ func (lex *Lexer_t) SkipWhiteSpace() {
 func (lex *Lexer_t) SkipComments() {
 
 	if lex.CurrentChar == '#' {
+
 		for lex.CurrentChar != '\n' {
+
 			lex.NextChar()
+
 		}
 	}
-
 }
 
 func (lex *Lexer_t) GetToken() token.Token_t {
@@ -88,7 +90,30 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 
 	} else if lex.CurrentChar == '-' {
 
-		token_i = token.NewToken(string(lex.CurrentChar), token.MINUS)
+		if lex.Peek() == '>' {
+
+			lastchar := lex.CurrentChar
+
+			lex.NextChar()
+
+			token_i = token.NewToken(
+				fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)),
+				token.ARROWINITFUNC,
+			)
+
+		} else {
+
+			token_i = token.NewToken(string(lex.CurrentChar), token.MINUS)
+
+		}
+
+	} else if lex.CurrentChar == '[' || lex.CurrentChar == ']' {
+
+		token_i = token.NewToken(string(lex.CurrentChar), token.HOOK)
+
+	} else if lex.CurrentChar == '{' || lex.CurrentChar == '}' {
+
+		token_i = token.NewToken(string(lex.CurrentChar), token.BRACE)
 
 	} else if lex.CurrentChar == '*' {
 
@@ -249,6 +274,18 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 		var str string = lex.Source[startPos:lex.Position]
 
 		token_i = token.NewToken(str, token.STRING)
+
+	} else if lex.CurrentChar == '(' {
+
+		token_i = token.NewToken(string(lex.CurrentChar), token.PARENT)
+
+	} else if lex.CurrentChar == ')' {
+
+		token_i = token.NewToken(string(lex.CurrentChar), token.PARENT)
+
+	} else if lex.CurrentChar == ',' {
+
+		token_i = token.NewToken(string(lex.CurrentChar), token.SEPARATOR)
 
 	} else if utils.IsAlpha(string(lex.CurrentChar)) {
 

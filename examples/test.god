@@ -1,17 +1,9 @@
 # My first programming language
 # The first programming language in golang By Lexter
 
-!=
-==
--
-*
-+
-&
-&&
-||
-|
-++
-let lol = "Hello, world" 
-let issoufre = 10
+fn ->issoufre[params1, params2, params3, params4] {
+  let name = "Bryton"
+  let age = 19
 
-let lolilol = 2.8
+}
+

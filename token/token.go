@@ -37,6 +37,11 @@ const (
 	COMPOR
 	POWEROP
 	INCR
+	PARENT
+	SEPARATOR
+	ARROWINITFUNC
+	HOOK
+	BRACE
 )
 
 var Keyword = map[string]int{
