@@ -20,4 +20,5 @@ func main() {
 		fmt.Println(token_i)
 		token_i = lexer.GetToken()
 	}
+
 }

@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"fmt"
+
 	"github.com/lexterl33t/god-programming-language/token"
 )
 
@@ -73,7 +74,18 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 		token_i = token.NewToken(string(lex.CurrentChar), token.MINUS)
 		break
 	case '*':
-		token_i = token.NewToken(string(lex.CurrentChar), token.ASTERISQ)
+
+		if lex.Peek() == '*' {
+			lastchar := lex.CurrentChar
+			lex.NextChar()
+
+			token_i = token.NewToken(
+				fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)),
+				token.POWEROP,
+			)
+		} else {
+			token_i = token.NewToken(string(lex.CurrentChar), token.ASTERISQ)
+		}
 		break
 	case '=':
 		if lex.Peek() == '=' {
@@ -90,6 +102,62 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 			lex.NextChar()
 			token_i = token.NewToken(
 				fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)), token.NOTEQ)
+		}
+		break
+	case '>':
+		if lex.Peek() == '=' {
+			lastchar := lex.CurrentChar
+			lex.NextChar()
+			token_i = token.NewToken(
+				fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)), token.ABOVEEQ)
+		} else if lex.Peek() == '>' {
+			lastchar := lex.CurrentChar
+			lex.NextChar()
+
+			token_i = token.NewToken(
+				fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)),
+				token.LOGICALRIGHTBITSHIFT,
+			)
+		} else {
+			token_i = token.NewToken(string(lex.CurrentChar), token.ABOVE)
+		}
+		break
+	case '<':
+		if lex.Peek() == '=' {
+			lastchar := lex.CurrentChar
+			lex.NextChar()
+
+			token_i = token.NewToken(fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)), token.LESSEQ)
+		} else if lex.Peek() == '<' {
+			lastchar := lex.CurrentChar
+			lex.NextChar()
+
+			token_i = token.NewToken(
+				fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)),
+				token.LOGICALLEFTBITSHIFT,
+			)
+		} else {
+			token_i = token.NewToken(string(lex.CurrentChar), token.LESS)
+		}
+		break
+	case '&':
+		if lex.Peek() == '&' {
+			lastchar := lex.CurrentChar
+			lex.NextChar()
+
+			token_i = token.NewToken(fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)), token.COMPAND)
+		} else {
+			token_i = token.NewToken(string(lex.CurrentChar), token.LOGICALAND)
+		}
+		break
+	case '|':
+		if lex.Peek() == '|' {
+			lastchar := lex.CurrentChar
+			lex.NextChar()
+
+			token_i = token.NewToken(fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)), token.COMPOR)
+		} else {
+			token_i = token.NewToken(string(lex.CurrentChar), token.LOGICALOR)
 		}
 		break
 	case '\n':
