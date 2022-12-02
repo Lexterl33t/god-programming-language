@@ -1,0 +1,7 @@
+# My first programming language
+
+!=
+==
+-
+*
++
