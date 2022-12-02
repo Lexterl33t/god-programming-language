@@ -1,6 +1,11 @@
 ## God - Programming Language
 
-### I am student in Cybersecurity at 2600 school. Being passionate about how programming languages work, I started developing my own language. I called it God (don't ask me why).
+I am student in Cybersecurity at 2600 school. 😏
+
+Being passionate about how programming languages work, 
+
+I started developing my own language. I called it God (don't ask me why).
+
 
 
 
@@ -15,4 +20,4 @@ fn -> main[] {
 }
 ```
 
-### this project is in development
+## ❌ this project is in development
