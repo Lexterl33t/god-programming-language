@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/lexterl33t/god-programming-language/token"
+	"github.com/lexterl33t/god-programming-language/utils"
 )
 
 type Lexer_t struct {
@@ -66,9 +67,7 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 	lex.SkipWhiteSpace()
 	lex.SkipComments()
 
-	switch lex.CurrentChar {
-	case '+':
-
+	if lex.CurrentChar == '+' {
 		if lex.Peek() == '+' {
 			lastchar := lex.CurrentChar
 			lex.NextChar()
@@ -80,12 +79,12 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 		} else {
 			token_i = token.NewToken(string(lex.CurrentChar), token.PLUS)
 		}
-		break
-	case '-':
-		token_i = token.NewToken(string(lex.CurrentChar), token.MINUS)
-		break
-	case '*':
 
+	} else if lex.CurrentChar == '-' {
+
+		token_i = token.NewToken(string(lex.CurrentChar), token.MINUS)
+
+	} else if lex.CurrentChar == '*' {
 		if lex.Peek() == '*' {
 			lastchar := lex.CurrentChar
 			lex.NextChar()
@@ -97,8 +96,8 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 		} else {
 			token_i = token.NewToken(string(lex.CurrentChar), token.ASTERISQ)
 		}
-		break
-	case '=':
+
+	} else if lex.CurrentChar == '=' {
 		if lex.Peek() == '=' {
 			lastChar := lex.CurrentChar
 			lex.NextChar()
@@ -106,21 +105,23 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 		} else {
 			token_i = token.NewToken(string(lex.CurrentChar), token.EQ)
 		}
-		break
-	case '!':
+
+	} else if lex.CurrentChar == '!' {
 		if lex.Peek() == '=' {
 			lastchar := lex.CurrentChar
 			lex.NextChar()
 			token_i = token.NewToken(
 				fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)), token.NOTEQ)
 		}
-		break
-	case '>':
+
+	} else if lex.CurrentChar == '>' {
 		if lex.Peek() == '=' {
 			lastchar := lex.CurrentChar
 			lex.NextChar()
 			token_i = token.NewToken(
-				fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)), token.ABOVEEQ)
+				fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)),
+				token.ABOVEEQ,
+			)
 		} else if lex.Peek() == '>' {
 			lastchar := lex.CurrentChar
 			lex.NextChar()
@@ -132,8 +133,8 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 		} else {
 			token_i = token.NewToken(string(lex.CurrentChar), token.ABOVE)
 		}
-		break
-	case '<':
+
+	} else if lex.CurrentChar == '<' {
 		if lex.Peek() == '=' {
 			lastchar := lex.CurrentChar
 			lex.NextChar()
@@ -150,8 +151,8 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 		} else {
 			token_i = token.NewToken(string(lex.CurrentChar), token.LESS)
 		}
-		break
-	case '&':
+
+	} else if lex.CurrentChar == '&' {
 		if lex.Peek() == '&' {
 			lastchar := lex.CurrentChar
 			lex.NextChar()
@@ -160,25 +161,27 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 		} else {
 			token_i = token.NewToken(string(lex.CurrentChar), token.LOGICALAND)
 		}
-		break
-	case '|':
+
+	} else if lex.CurrentChar == '|' {
 		if lex.Peek() == '|' {
 			lastchar := lex.CurrentChar
 			lex.NextChar()
 
-			token_i = token.NewToken(fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)), token.COMPOR)
+			token_i = token.NewToken(
+				fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)),
+				token.COMPOR,
+			)
 		} else {
 			token_i = token.NewToken(string(lex.CurrentChar), token.LOGICALOR)
 		}
-		break
-	case '\n':
+
+	} else if lex.CurrentChar == '\n' {
+
 		token_i = token.NewToken(string(lex.CurrentChar), token.NEWLINE)
-		break
-	case 00:
+	} else if lex.CurrentChar == 00 {
 		token_i = token.NewToken(string(lex.CurrentChar), token.EOF)
-		break
-	default:
-		log.Fatalln(fmt.Sprintf("%v UNknow token", lex.CurrentChar))
+	} else {
+		log.Fatalln(fmt.Sprintf("%v unknow token", lex.CurrentChar))
 	}
 
 	lex.NextChar()
