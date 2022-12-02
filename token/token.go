@@ -35,6 +35,7 @@ const (
 	COMPAND
 	COMPOR
 	POWEROP
+	INCR
 )
 
 type Token_t struct {

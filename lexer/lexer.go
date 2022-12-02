@@ -68,7 +68,18 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 
 	switch lex.CurrentChar {
 	case '+':
-		token_i = token.NewToken(string(lex.CurrentChar), token.PLUS)
+
+		if lex.Peek() == '+' {
+			lastchar := lex.CurrentChar
+			lex.NextChar()
+
+			token_i = token.NewToken(
+				fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)),
+				token.INCR,
+			)
+		} else {
+			token_i = token.NewToken(string(lex.CurrentChar), token.PLUS)
+		}
 		break
 	case '-':
 		token_i = token.NewToken(string(lex.CurrentChar), token.MINUS)
