@@ -11,3 +11,7 @@
 ||
 |
 ++
+let lol = "Hello, world" 
+let issoufre = 10
+
+let lolilol = 2.8

@@ -2,6 +2,7 @@ package lexer
 
 import (
 	"log"
+	"unicode"
 
 	"fmt"
 
@@ -68,7 +69,9 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 	lex.SkipComments()
 
 	if lex.CurrentChar == '+' {
+
 		if lex.Peek() == '+' {
+
 			lastchar := lex.CurrentChar
 			lex.NextChar()
 
@@ -76,8 +79,11 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 				fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)),
 				token.INCR,
 			)
+
 		} else {
+
 			token_i = token.NewToken(string(lex.CurrentChar), token.PLUS)
+
 		}
 
 	} else if lex.CurrentChar == '-' {
@@ -85,7 +91,9 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 		token_i = token.NewToken(string(lex.CurrentChar), token.MINUS)
 
 	} else if lex.CurrentChar == '*' {
+
 		if lex.Peek() == '*' {
+
 			lastchar := lex.CurrentChar
 			lex.NextChar()
 
@@ -93,36 +101,58 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 				fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)),
 				token.POWEROP,
 			)
+
 		} else {
+
 			token_i = token.NewToken(string(lex.CurrentChar), token.ASTERISQ)
+
 		}
 
 	} else if lex.CurrentChar == '=' {
+
 		if lex.Peek() == '=' {
+
 			lastChar := lex.CurrentChar
 			lex.NextChar()
-			token_i = token.NewToken(fmt.Sprintf("%v%v", string(lastChar), string(lex.CurrentChar)), token.DOUBLEEQ)
+
+			token_i = token.NewToken(
+				fmt.Sprintf("%v%v", string(lastChar), string(lex.CurrentChar)),
+				token.DOUBLEEQ,
+			)
+
 		} else {
+
 			token_i = token.NewToken(string(lex.CurrentChar), token.EQ)
 		}
 
 	} else if lex.CurrentChar == '!' {
+
 		if lex.Peek() == '=' {
+
 			lastchar := lex.CurrentChar
 			lex.NextChar()
+
 			token_i = token.NewToken(
-				fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)), token.NOTEQ)
+				fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)),
+				token.NOTEQ,
+			)
+
 		}
 
 	} else if lex.CurrentChar == '>' {
+
 		if lex.Peek() == '=' {
+
 			lastchar := lex.CurrentChar
 			lex.NextChar()
+
 			token_i = token.NewToken(
 				fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)),
 				token.ABOVEEQ,
 			)
+
 		} else if lex.Peek() == '>' {
+
 			lastchar := lex.CurrentChar
 			lex.NextChar()
 
@@ -130,17 +160,23 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 				fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)),
 				token.LOGICALRIGHTBITSHIFT,
 			)
+
 		} else {
+
 			token_i = token.NewToken(string(lex.CurrentChar), token.ABOVE)
+
 		}
 
 	} else if lex.CurrentChar == '<' {
 		if lex.Peek() == '=' {
+
 			lastchar := lex.CurrentChar
 			lex.NextChar()
 
 			token_i = token.NewToken(fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)), token.LESSEQ)
+
 		} else if lex.Peek() == '<' {
+
 			lastchar := lex.CurrentChar
 			lex.NextChar()
 
@@ -148,22 +184,32 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 				fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)),
 				token.LOGICALLEFTBITSHIFT,
 			)
+
 		} else {
+
 			token_i = token.NewToken(string(lex.CurrentChar), token.LESS)
+
 		}
 
 	} else if lex.CurrentChar == '&' {
+
 		if lex.Peek() == '&' {
+
 			lastchar := lex.CurrentChar
 			lex.NextChar()
 
 			token_i = token.NewToken(fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)), token.COMPAND)
+
 		} else {
+
 			token_i = token.NewToken(string(lex.CurrentChar), token.LOGICALAND)
+
 		}
 
 	} else if lex.CurrentChar == '|' {
+
 		if lex.Peek() == '|' {
+
 			lastchar := lex.CurrentChar
 			lex.NextChar()
 
@@ -171,20 +217,81 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 				fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)),
 				token.COMPOR,
 			)
+
 		} else {
+
 			token_i = token.NewToken(string(lex.CurrentChar), token.LOGICALOR)
+
 		}
 
+	} else if unicode.IsDigit(rune(lex.CurrentChar)) {
+
+		startpos := lex.Position
+
+		for unicode.IsDigit(rune(lex.CurrentChar)) || lex.CurrentChar == '.' {
+			lex.NextChar()
+		}
+
+		var number string = lex.Source[startpos:lex.Position]
+
+		token_i = token.NewToken(number, token.NUMBER)
+
+	} else if lex.CurrentChar == '"' {
+
+		lex.NextChar()
+
+		startPos := lex.Position
+
+		for lex.CurrentChar != '"' {
+			lex.NextChar()
+		}
+
+		var str string = lex.Source[startPos:lex.Position]
+
+		token_i = token.NewToken(str, token.STRING)
+
+	} else if utils.IsAlpha(string(lex.CurrentChar)) {
+
+		startPos := lex.Position
+
+		for utils.IsAlpha(string(lex.CurrentChar)) {
+			lex.NextChar()
+		}
+
+		var keyword_found string = lex.Source[startPos:lex.Position]
+
+		if CheckIfKeyWord(keyword_found) {
+
+			token_i = token.NewToken(keyword_found, token.Keyword[keyword_found])
+
+		} else {
+
+			token_i = token.NewToken(keyword_found, token.IDENT)
+
+		}
 	} else if lex.CurrentChar == '\n' {
 
 		token_i = token.NewToken(string(lex.CurrentChar), token.NEWLINE)
+
 	} else if lex.CurrentChar == 00 {
+
 		token_i = token.NewToken(string(lex.CurrentChar), token.EOF)
+
 	} else {
+
 		log.Fatalln(fmt.Sprintf("%v unknow token", lex.CurrentChar))
+
 	}
 
 	lex.NextChar()
 
 	return token_i
+}
+
+func CheckIfKeyWord(keyword string) bool {
+	if _, ok := token.Keyword[keyword]; ok {
+		return true
+	}
+
+	return false
 }

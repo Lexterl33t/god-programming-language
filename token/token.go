@@ -13,6 +13,7 @@ const (
 	GOTO
 	PRINT
 	FN
+	ENDFN
 	WHILE
 	ENDWHILE
 	IF
@@ -37,6 +38,17 @@ const (
 	POWEROP
 	INCR
 )
+
+var Keyword = map[string]int{
+	"let":      LET,
+	"while":    WHILE,
+	"endwhile": ENDWHILE,
+	"if":       IF,
+	"endif":    ENDIF,
+	"goto":     GOTO,
+	"fn":       FN,
+	"endfn":    ENDFN,
+}
 
 type Token_t struct {
 	Value string
