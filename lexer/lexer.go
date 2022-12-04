@@ -107,13 +107,21 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 
 		}
 
-	} else if lex.CurrentChar == '[' || lex.CurrentChar == ']' {
+	} else if lex.CurrentChar == '[' {
 
-		token_i = token.NewToken(string(lex.CurrentChar), token.HOOK)
+		token_i = token.NewToken(string(lex.CurrentChar), token.HOOKBEG)
 
-	} else if lex.CurrentChar == '{' || lex.CurrentChar == '}' {
+	} else if lex.CurrentChar == ']' {
 
-		token_i = token.NewToken(string(lex.CurrentChar), token.BRACE)
+		token_i = token.NewToken(string(lex.CurrentChar), token.HOOKEND)
+
+	} else if lex.CurrentChar == '{' {
+
+		token_i = token.NewToken(string(lex.CurrentChar), token.BRACEBEG)
+
+	} else if lex.CurrentChar == '}' {
+
+		token_i = token.NewToken(string(lex.CurrentChar), token.BRACEEND)
 
 	} else if lex.CurrentChar == '*' {
 

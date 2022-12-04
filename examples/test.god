@@ -1,8 +1,12 @@
 # My first programming language
 # The first programming language in golang By Lexter
+fn -> main[] {
+  let name = 1337
+  print(name)
 
-fn ->issoufre[params1, params2, params3, params4] {
-  let name = "Bryton"
-  let age = 19
+  if(ok == 10) {
+    name = 134
+  }
 }
+
 

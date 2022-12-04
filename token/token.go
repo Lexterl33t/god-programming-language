@@ -40,8 +40,10 @@ const (
 	PARENT
 	SEPARATOR
 	ARROWINITFUNC
-	HOOK
-	BRACE
+	HOOKBEG
+	HOOKEND
+	BRACEBEG
+	BRACEEND
 )
 
 var Keyword = map[string]int{
@@ -53,6 +55,7 @@ var Keyword = map[string]int{
 	"goto":     GOTO,
 	"fn":       FN,
 	"endfn":    ENDFN,
+	"print":    PRINT,
 }
 
 type Token_t struct {
