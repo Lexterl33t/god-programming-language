@@ -29,7 +29,7 @@ fn -> main[] {
 ```
 
 
-[Tokenization](images/screen1.png)
+![Tokenization](images/screen1.png)
 
 
 ## ❌ this project is in development
