@@ -12,12 +12,10 @@ type Parser_t struct {
 	PeekToken    token.Token_t
 }
 
-func NewParser(sourceCode string) Parser_t {
-	return Parser_t{
-		Lex: lexer.NewLexer(sourceCode),
-	}
+func NewParser() *Parser_t {
+	return &Parser_t{}
 }
 
-func Parse() {
-
+func (p *Parser_t) Parse(sourceCode string) {
+	p.Lex = lexer.NewLexer(sourceCode)
 }
