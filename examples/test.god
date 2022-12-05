@@ -20,3 +20,6 @@ fn main (params1: string, params2: string) @void {
 }
 
 
+[vm] -> fn hello(name) @void {
+  print("Hello "+name)
+}
