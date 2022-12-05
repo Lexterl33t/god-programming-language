@@ -33,6 +33,22 @@ fn -> main() {
 ```
 
 
+Futures features:
+
+Obfuscate the target blockstatement function by cff keyword
+
+```god
+cff fn -> obfuscate_func() {
+  let name = "Bryton"
+
+  if(name == "Bryton") {
+    print("Bravo")
+  } else {
+    print("Nop")
+  }
+}
+```
+
 ![Tokenization](images/screen1.png)
 
 
