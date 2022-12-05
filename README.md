@@ -23,11 +23,11 @@ Step compilation
 
 ```god
 
-fn -> hello[name] {
-  print("Hello world")
+fn -> hello(name) {
+  print("Hello "+name)
 }
 
-fn -> main[] {
+fn -> main() {
   hello("Bryton")
 }
 ```
