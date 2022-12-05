@@ -23,12 +23,15 @@ Step compilation
 
 ```god
 
-fn -> hello(name) {
-  print("Hello "+name)
-}
+# My first programming language
+# The first programming language in golang By Lexter
+fn main (params1: string, params2: string) @void {
+  let name = 1337
+  print(name)
 
-fn -> main() {
-  hello("Bryton")
+  if(ok == 10) {
+    name = 134
+  }
 }
 ```
 
@@ -38,14 +41,14 @@ Futures features:
 Obfuscate the target blockstatement function by cff keyword
 
 ```god
-cff fn -> obfuscate_func() {
-  let name = "Bryton"
+[cff] -> fn sum(a: []int) @int {
+  let sum = 0
 
-  if(name == "Bryton") {
-    print("Bravo")
-  } else {
-    print("Nop")
+  for n of a {
+    sum = sum + n
   }
+  
+  return(sum)
 }
 ```
 
