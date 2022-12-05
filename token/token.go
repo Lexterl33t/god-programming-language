@@ -37,7 +37,8 @@ const (
 	COMPOR
 	POWEROP
 	INCR
-	PARENT
+	RPARENT
+	LPARENT
 	SEPARATOR
 	ARROWINITFUNC
 	HOOKBEG
@@ -59,13 +60,15 @@ var Keyword = map[string]int{
 }
 
 type Token_t struct {
-	Value string
-	Kind  int
+	Value   string
+	Kind    int
+	KindStr string
 }
 
-func NewToken(value string, token int) Token_t {
+func NewToken(value string, token int, tokenstr string) Token_t {
 	return Token_t{
-		Value: value,
-		Kind:  token,
+		Value:   value,
+		Kind:    token,
+		KindStr: tokenstr,
 	}
 }

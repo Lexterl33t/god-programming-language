@@ -80,11 +80,12 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 			token_i = token.NewToken(
 				fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)),
 				token.INCR,
+				"token.INCR",
 			)
 
 		} else {
 
-			token_i = token.NewToken(string(lex.CurrentChar), token.PLUS)
+			token_i = token.NewToken(string(lex.CurrentChar), token.PLUS, "token.PLUS")
 
 		}
 
@@ -99,29 +100,30 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 			token_i = token.NewToken(
 				fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)),
 				token.ARROWINITFUNC,
+				"token.ARROWINITFUNC",
 			)
 
 		} else {
 
-			token_i = token.NewToken(string(lex.CurrentChar), token.MINUS)
+			token_i = token.NewToken(string(lex.CurrentChar), token.MINUS, "token.MINUS")
 
 		}
 
 	} else if lex.CurrentChar == '[' {
 
-		token_i = token.NewToken(string(lex.CurrentChar), token.HOOKBEG)
+		token_i = token.NewToken(string(lex.CurrentChar), token.HOOKBEG, "token.HOOKBEG")
 
 	} else if lex.CurrentChar == ']' {
 
-		token_i = token.NewToken(string(lex.CurrentChar), token.HOOKEND)
+		token_i = token.NewToken(string(lex.CurrentChar), token.HOOKEND, "token.HOOKEND")
 
 	} else if lex.CurrentChar == '{' {
 
-		token_i = token.NewToken(string(lex.CurrentChar), token.BRACEBEG)
+		token_i = token.NewToken(string(lex.CurrentChar), token.BRACEBEG, "token.BRACEBEG")
 
 	} else if lex.CurrentChar == '}' {
 
-		token_i = token.NewToken(string(lex.CurrentChar), token.BRACEEND)
+		token_i = token.NewToken(string(lex.CurrentChar), token.BRACEEND, "token.BRACEEND")
 
 	} else if lex.CurrentChar == '*' {
 
@@ -133,11 +135,12 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 			token_i = token.NewToken(
 				fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)),
 				token.POWEROP,
+				"token.POWEROP",
 			)
 
 		} else {
 
-			token_i = token.NewToken(string(lex.CurrentChar), token.ASTERISQ)
+			token_i = token.NewToken(string(lex.CurrentChar), token.ASTERISQ, "token.ASTERISQ")
 
 		}
 
@@ -151,11 +154,12 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 			token_i = token.NewToken(
 				fmt.Sprintf("%v%v", string(lastChar), string(lex.CurrentChar)),
 				token.DOUBLEEQ,
+				"token.DOUBLEEQ",
 			)
 
 		} else {
 
-			token_i = token.NewToken(string(lex.CurrentChar), token.EQ)
+			token_i = token.NewToken(string(lex.CurrentChar), token.EQ, "token.EQ")
 		}
 
 	} else if lex.CurrentChar == '!' {
@@ -168,6 +172,7 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 			token_i = token.NewToken(
 				fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)),
 				token.NOTEQ,
+				"token.NOTEQ",
 			)
 
 		}
@@ -182,6 +187,7 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 			token_i = token.NewToken(
 				fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)),
 				token.ABOVEEQ,
+				"token.ABOVEEQ",
 			)
 
 		} else if lex.Peek() == '>' {
@@ -192,11 +198,12 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 			token_i = token.NewToken(
 				fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)),
 				token.LOGICALRIGHTBITSHIFT,
+				"token.LOGICALRIGHTBITSHIFT",
 			)
 
 		} else {
 
-			token_i = token.NewToken(string(lex.CurrentChar), token.ABOVE)
+			token_i = token.NewToken(string(lex.CurrentChar), token.ABOVE, "token.ABOVE")
 
 		}
 
@@ -206,7 +213,7 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 			lastchar := lex.CurrentChar
 			lex.NextChar()
 
-			token_i = token.NewToken(fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)), token.LESSEQ)
+			token_i = token.NewToken(fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)), token.LESSEQ, "token.LESSEQ")
 
 		} else if lex.Peek() == '<' {
 
@@ -216,11 +223,12 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 			token_i = token.NewToken(
 				fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)),
 				token.LOGICALLEFTBITSHIFT,
+				"token.LOGICALLEFTBITSHIFT",
 			)
 
 		} else {
 
-			token_i = token.NewToken(string(lex.CurrentChar), token.LESS)
+			token_i = token.NewToken(string(lex.CurrentChar), token.LESS, "token.LESS")
 
 		}
 
@@ -231,11 +239,11 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 			lastchar := lex.CurrentChar
 			lex.NextChar()
 
-			token_i = token.NewToken(fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)), token.COMPAND)
+			token_i = token.NewToken(fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)), token.COMPAND, "token.COMPAND")
 
 		} else {
 
-			token_i = token.NewToken(string(lex.CurrentChar), token.LOGICALAND)
+			token_i = token.NewToken(string(lex.CurrentChar), token.LOGICALAND, "token.LOGICALAND")
 
 		}
 
@@ -249,11 +257,12 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 			token_i = token.NewToken(
 				fmt.Sprintf("%v%v", string(lastchar), string(lex.CurrentChar)),
 				token.COMPOR,
+				"token.COMPOR",
 			)
 
 		} else {
 
-			token_i = token.NewToken(string(lex.CurrentChar), token.LOGICALOR)
+			token_i = token.NewToken(string(lex.CurrentChar), token.LOGICALOR, "token.LOGICALOR")
 
 		}
 
@@ -267,7 +276,7 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 
 		var number string = lex.Source[startpos:lex.Position]
 
-		token_i = token.NewToken(number, token.NUMBER)
+		token_i = token.NewToken(number, token.NUMBER, "token.NUMBER")
 
 	} else if lex.CurrentChar == '"' {
 
@@ -281,19 +290,19 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 
 		var str string = lex.Source[startPos:lex.Position]
 
-		token_i = token.NewToken(str, token.STRING)
+		token_i = token.NewToken(str, token.STRING, "token.STRING")
 
 	} else if lex.CurrentChar == '(' {
 
-		token_i = token.NewToken(string(lex.CurrentChar), token.PARENT)
+		token_i = token.NewToken(string(lex.CurrentChar), token.LPARENT, "token.LPARENT")
 
 	} else if lex.CurrentChar == ')' {
 
-		token_i = token.NewToken(string(lex.CurrentChar), token.PARENT)
+		token_i = token.NewToken(string(lex.CurrentChar), token.RPARENT, "token.RPARENT")
 
 	} else if lex.CurrentChar == ',' {
 
-		token_i = token.NewToken(string(lex.CurrentChar), token.SEPARATOR)
+		token_i = token.NewToken(string(lex.CurrentChar), token.SEPARATOR, "token.SEPARATOR")
 
 	} else if utils.IsAlpha(string(lex.CurrentChar)) {
 
@@ -307,20 +316,20 @@ func (lex *Lexer_t) GetToken() token.Token_t {
 
 		if CheckIfKeyWord(keyword_found) {
 
-			token_i = token.NewToken(keyword_found, token.Keyword[keyword_found])
+			token_i = token.NewToken(keyword_found, token.Keyword[keyword_found], "")
 
 		} else {
 
-			token_i = token.NewToken(keyword_found, token.IDENT)
+			token_i = token.NewToken(keyword_found, token.IDENT, "token.IDENT")
 
 		}
 	} else if lex.CurrentChar == '\n' {
 
-		token_i = token.NewToken(string(lex.CurrentChar), token.NEWLINE)
+		token_i = token.NewToken(string(lex.CurrentChar), token.NEWLINE, "token.NEWLINE")
 
 	} else if lex.CurrentChar == 00 {
 
-		token_i = token.NewToken(string(lex.CurrentChar), token.EOF)
+		token_i = token.NewToken(string(lex.CurrentChar), token.EOF, "token.EOF")
 
 	} else {
 

@@ -1,6 +1,6 @@
 # My first programming language
 # The first programming language in golang By Lexter
-fn -> main[] {
+fn ->main (params1, params2) {
   let name = 1337
   print(name)
 
