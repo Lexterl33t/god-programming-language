@@ -50,7 +50,14 @@ Obfuscate the target blockstatement function by cff keyword
   
   return(sum)
 }
+
+# VM obfuscation
+[vm] -> fn hello(name) @void {
+  print("Hello "+name)
+}
+
 ```
+
 
 ![Tokenization](images/screen1.png)
 
